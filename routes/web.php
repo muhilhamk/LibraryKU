@@ -26,6 +26,18 @@ use App\Models\User;
 |
 */
 
+// Index routes
+Route::get('/', [AuthController::class, 'index'])->name('index');
+
+// Auth routes
+Route::get('/signup', [AuthController::class, 'signup'])->name('signup');
+Route::post('/signup', [AuthController::class, 'register'])->name('create.user');
+
+Route::get('/login', [AuthController::class, 'signin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password')->with('title', 'Forgot Password');
 })->name('password.request');
@@ -71,18 +83,6 @@ Route::post('/reset-password', function (Request $request) {
                 ? redirect()->route('login')->with('success', __($status))
                 : back()->with(['erorr' => [__($status)]]);
 })->name('password.update');
-
-// Index routes
-Route::get('/', [AuthController::class, 'index'])->name('index');
-
-// Auth routes
-Route::get('/signup', [AuthController::class, 'signup'])->name('signup');
-Route::post('/signup', [AuthController::class, 'register'])->name('create.user');
-
-Route::get('/login', [AuthController::class, 'signin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('forgot-password');
 // Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('forgot-password');
